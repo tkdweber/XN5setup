@@ -1,0 +1,24 @@
+Package: XN5setup
+Type: Package
+Title: Setup semi-deterministic XN5 projects
+Version: 0.1.1
+Authors@R: 
+    person(given = "Tobias KD",
+           family = "WEBER",
+           role = c("aut", "cre"),
+           email = "<tobias.weber@uni-hohenheim.de>",
+           comment = c(ORCID = "0000-0002-3448-5208"))
+Maintainer: Tobias KD Weber <tobias.weber@uni-hohenheim.de>
+Description: R package to set up gridded XN5 simulations. The core idea is to setup a z, x, y, tile grid (in XN5: grid, i, j, tile), where:
+    \emph{z} is the vertical component, used as the grid layers (e.g. stochastic weather),
+    \emph{x} is the spatial grid abscissa, e.g. spatial explicit properties,
+    \emph{y} is the spatial grid ordinate, e.g. for stochastic soil properties, and
+    \emph{tile} are the grid cell's sub-columns, e.g. crop rotations.
+Depends: R (>= 3.6.0)
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: rlist, stringr, qdapTools, lubridate, data.table, magrittr, dplyr
+Suggests: 
+    testthat
