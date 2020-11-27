@@ -37,7 +37,7 @@ out.l <- list()
    "zuckerruebe1" <- c("zuckerruebe1","1970-06-06" ,"AHL"                          ,"FE011" ,54        ,13.5 ,13.5 ,27   ),
    "Wintergerste" <- c("Wintergerste","1971-03-10" ,"Kalkammonsalpeter"            ,"FE011" ,59        ,29.5 ,29.5 ,0    ),
    "Wintergerste" <- c("Wintergerste","1971-04-05" ,"Kalkammonsalpeter"            ,"FE011" ,54        ,27   ,27   ,0    )))
- setnames(DT_min, c("variety", "date", "fertilizer" , "code", "n_tot_min", "no3n", "nh4n", "urea"))
+ data.table::setnames(DT_min, c("variety", "date", "fertilizer" , "code", "n_tot_min", "no3n", "nh4n", "urea"))
 
 
  DT_org <- data.table::data.table(rbind(
@@ -46,7 +46,7 @@ out.l <- list()
   "SilageKRG"    <- c("SilageKRG"   ,"1970-04-16" ,"Rinderguelle_5","RE005" ,    1   ,1461        ,1052       ,38         ,67    ),
   "Wintergerste" <- c("Wintergerste","1970-10-18" ,"Biogasslurry"  ,"RE006" ,    1   ,1438        ,1035       ,65         ,37    ),
   "Wintergerste" <- c("Wintergerste","1971-04-05" ,"Rinderguelle_5","RE005" ,    1   ,2411        ,1735       ,109        ,62    )))
- setnames(DT_org, c("variety", "date"  ,"fertilizer"    ,"code"  ,"amount","dry_matter","org_subst","n_tot_org","nh4n"))
+ data.table::setnames(DT_org, c("variety", "date"  ,"fertilizer"    ,"code"  ,"amount","dry_matter","org_subst","n_tot_org","nh4n"))
 
  out.l$min <- update_time(x = x, DT = DT_min)
  out.l$org <- update_time(x = x, DT = DT_org)

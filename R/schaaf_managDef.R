@@ -35,7 +35,7 @@ schaaf_managDef <- function(x){
 "Wintergerste"	 <- c("Wintergerste"	,"1970-09-22"	,"Saatbettkombination"	,"TI032"	,8 ),
 "Wintergerste"	 <- c("Wintergerste"	,"1970-10-19"	,"Scheibenegge"			     ,"TI031"	,5 ),
 "Wintergerste"	 <- c("Wintergerste"	,"1971-04-06" ,"Scheibenegge"			     ,"TI031"	,5 )))
-setnames(DT_manag, c("variety"		,"date"		,"implement"	,"code"		,"depth"))
+ data.table::setnames(DT_manag, c("variety"		,"date"		,"implement"	,"code"		,"depth"))
 
 out.l$manag <- update_time(x = x, DT = DT_manag)
 
