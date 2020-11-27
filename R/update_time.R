@@ -41,7 +41,7 @@ update_time <- function(x, DT) {
   dtime <- sdat - lubridate::year(isdat)
 
   # UPDATE
-  dt_min$date <- isdat + lubridate::years(dtime)
+  dt_min$date <- isdat + lubridate::years(dtime) + years(year(isdat) - 1970)
 
   # RETURN
   return(dt_min)
