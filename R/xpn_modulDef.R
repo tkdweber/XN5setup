@@ -39,6 +39,7 @@ xpn_modulDef <- function(x = NA){
  libs$daisy_miner           <- 1
  libs$depos                 <- 1
  libs$gecros                <- 1
+ libs$gecros_h              <- 1
  libs$hydrus                <- 1
  libs$xpn_output            <- 1
  libs$balance               <- 1
