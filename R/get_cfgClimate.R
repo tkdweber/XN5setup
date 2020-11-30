@@ -77,8 +77,8 @@ get_cfgClimate <- function(x){
                   , data.table::data.table("name" = names(AveYearTemp), "AveYearTemp" = AveYearTemp, "MonthTempAmp" =MonthTempAmp)
                   , by = "name")
 
-      AveYearTemp  <-  unlist(DT$AveYearTemp) %>% setNames(., sel$soil$weather )
-      MonthTempAmp <-  unlist(DT$MonthTempAmp) %>% setNames(., sel$soil$weather )
+      AveYearTemp  <-  unlist(DT$AveYearTemp) %>% set_names(., sel$soil$weather )
+      MonthTempAmp <-  unlist(DT$MonthTempAmp) %>% set_names(., sel$soil$weather )
 
     }
 
