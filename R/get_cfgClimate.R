@@ -40,7 +40,7 @@ get_cfgClimate <- function(x){
 
   # ensure complete years are considered only, but only if at least one full year is present in the data
   if((x$sim_end %>% year -
-      x$sim_start %>% year) > 1){
+      x$sim_start %>% year) > 0){
 
    cut_lo <- as.Date(ISOdate(year(x$sim_start)+1, 1, 1  ))
    cut_up <- as.Date(ISOdate(year(x$sim_end) - 1, 12, 31))
