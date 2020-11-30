@@ -31,13 +31,14 @@
 #'
 
 
+
 get_cfgClimate <- function(x){
 
   AveYearTemp  <- list()
   MonthTempAmp <- list()
 
 
-  for (kweather in 1:length(settings$weather$data)){
+  for (kweather in 1:length(x$weather$data)){
 
     # ensure complete years are considered only, but only if at least one full year is present in the data
     if((x$sim_end %>% year -
@@ -46,15 +47,14 @@ get_cfgClimate <- function(x){
       cut_lo <- as.Date(ISOdate(year(x$sim_start), 1, 1  ))
       cut_up <- as.Date(ISOdate(year(x$sim_end)  , 12, 31))
 
-      sel    <- x$weather$data[[kweather]]$Date >= cut_lo & x$weather$data[[kweather]]$Date <= cut_up
+      sel_loc    <- x$weather$data[[kweather]]$Date >= cut_lo & x$weather$data[[kweather]]$Date <= cut_up
 
     }else{
       # this is, so that the code works
-      sel <- TRUE
+      sel_loc <- TRUE
       message("Attention: calculation of AveYearTemp and MonthTempAmp based on incomplete year information \n Adjust manually in cfg.ini")}
 
-
-    dat_temp <- x$weather$data[[kweather]][sel, ]
+    dat_temp <- x$weather$data[[kweather]][sel_loc, ]
 
     AveYearTemp[[kweather]]  <- aggregate(dat_temp[,9], list(dat_temp$Date%>%year), mean) %>% dplyr::summarise(mean(x)) %>% round(.,2)
 
@@ -66,11 +66,30 @@ get_cfgClimate <- function(x){
 
   AveYearTemp  %<>% unlist
   MonthTempAmp %<>% unlist
-
   names(AveYearTemp) <- names(MonthTempAmp) <- x$weather$file_name
+
+  # unorthodox. because it checks if an object is in the global environment. Need to change this.
+  if(exists("weather", sel$soil)) {
+
+    if(length(sel$soil$weather) != length(AveYearTemp)){
+
+      DT <- merge(data.table::data.table("name" = sel$soil$weather)
+                  , data.table::data.table("name" = names(AveYearTemp), "AveYearTemp" = AveYearTemp, "MonthTempAmp" =MonthTempAmp)
+                  , by = "name")
+
+      AveYearTemp  <-  unlist(DT$AveYearTemp) %>% setNames(., sel$soil$weather )
+      MonthTempAmp <-  unlist(DT$MonthTempAmp) %>% setNames(., sel$soil$weather )
+
+    }
+
+  }
+
 
   return(list("AveYearTemp" = unlist(AveYearTemp), "MonthTempAmp" = unlist(MonthTempAmp)))
 }
+
+
+
 
 
 
