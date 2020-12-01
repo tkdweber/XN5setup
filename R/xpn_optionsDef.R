@@ -43,7 +43,7 @@ xpn_optionsDef <- function(x = NA, query.plant.model = "gecros"){
  options$'CoverCrop_Ackersenf_gecros'   = "$<$PROJECT_PATH/$PROJECT_NAME__covercrop_ackersenf_gecros.ini$>"
  options$'Potato_Kartoffel_gecros'      = "$<$PROJECT_PATH/$PROJECT_NAME__potato_kartoffel_gecros.ini$>"
  options$'varlist'                      = "$<$PROJECT_PATH/$PROJECT_NAME_varlist.var$>"
- options$'time step'                    = "0.05"
+ options$'time step'                    = "0.1"
  options$'output time step'             = "daily"
  options$'create_auto_init_files'       = "0"
  options$'t_base'                       = 3.5
