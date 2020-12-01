@@ -86,7 +86,7 @@ xpi_Def <- function(x = NA){
  xpi.list$nitrogen$'denitrification'     <- "LEACHN"
  xpi.list$nitrogen$'urea hydrolysis'     <- "LEACHN"
  xpi.list$nitrogen$'mineralisation'      <- "Hansen et al. (DAISY_Miner)"
-
+ xpi.list$nitrogen$'deposition'          <- "Constant Deposition"
  # [management] ----------------------
  xpi.list$management$'application fertilizers' <- "Schaaf"
  xpi.list$management$'mixing incorporation'    <- "Williams et al. (EPIC)"
