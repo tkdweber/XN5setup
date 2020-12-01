@@ -7,7 +7,7 @@
 #' @param x NA - Default values are used i) a list with named elements. The names of the elements will be used as the LHS and
 #' the vector element will be the RHS of the equal sign in extending [system].
 #' ii) The default system can be updated by named x elements equalling the [system] LHS
-#'
+#' @param query.plant.model character which can be used to update the plant model. only gecros and gecros_h supported.
 #' @return The system specification for the .xnp file
 #'
 #' @author Tobias KD Weber , \email{tobias.weber@uni-hohenheim.de}
@@ -18,172 +18,171 @@
 #'
 #' @export
 
-xpi_Def <- function(x = NA){
+xpi_Def <- function(x = NA, query.plant.model = "gecros"){
 
- # if(all(!is.na(x))){
- #  x <- lapply(x, as.character)
- # }
+  # if(all(!is.na(x))){
+  #  x <- lapply(x, as.character)
+  # }
+  query.plant.model %<>% toupper
+  if(query.plant.model %in% toupper(c("gecros", "gecros_h"))){stop("plant model not supported")}
+  # _____ DEFAULT settings ----------------
+  {
+    xpi.list    <- list()
 
- # _____ DEFAULT settings ----------------
-{
- xpi.list    <- list()
+    #1 INITIALISE ######
+    # [control] ----------------------
+    xpi.list$control$'balance'      <- "BALANCE"
+    xpi.list$control$'database'     <-  "Expert N Standard Read INI"
+    xpi.list$control$'pedotransfer' <-  "Campbell"
+    xpi.list$control$'output'       <-  "XPN_OUTPUT"
 
- #1 INITIALISE ######
- # [control] ----------------------
- xpi.list$control$'balance'      <- "BALANCE"
- xpi.list$control$'database'     <-  "Expert N Standard Read INI"
- xpi.list$control$'pedotransfer' <-  "Campbell"
- xpi.list$control$'output'       <- "XPN_OUTPUT"
+    # [Expert N Standard Read INI] ----------------------
+    xpi.list$'Expert N Standard Read INI'$'use high resolution climate data' <- 0
+    xpi.list$'Expert N Standard Read INI'$'interpolate climate data'         <- 0
+    xpi.list$'Expert N Standard Read INI'$'filename'                         <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_cfg.ini$>"
+    xpi.list$'Expert N Standard Read INI'$'time zone'                        <- 0
+    xpi.list$'Expert N Standard Read INI'$'climate file'                     <- "$<$PROJECT_PATH/weather.csv$>"
 
- # [Expert N Standard Read INI] ----------------------
- xpi.list$'Expert N Standard Read INI'$'use high resolution climate data' <- 0
- xpi.list$'Expert N Standard Read INI'$'interpolate climate data'         <- 0
- xpi.list$'Expert N Standard Read INI'$'filename'                         <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_cfg.ini$>"
- xpi.list$'Expert N Standard Read INI'$'time zone'                        <- 0
- xpi.list$'Expert N Standard Read INI'$'climate file'                     <- "$<$PROJECT_PATH/weather.csv$>"
+    # [expertn_database] ----------------------
+    # not implemented
+    # [water] ----------------------
+    xpi.list$water$'potential evapotranspiration' <- "Penman Monteith (FAO)"
+    xpi.list$water$'potential evaporation'        <- "Penman Monteith"
+    xpi.list$water$'actual evaporation'           <- "Penman Monteith"
+    xpi.list$water$'kc factor'                    <- "dev stage"
+    xpi.list$water$'hydraulic functions'          <- "van Genuchten and Mualem"
+    xpi.list$water$'flow module'                  <- "HYDRUS Flow"
 
- # [expertn_database] ----------------------
- # not implemented
- # [water] ----------------------
- xpi.list$water$'potential evapotranspiration' <- "Penman Monteith (FAO)"
- xpi.list$water$'potential evaporation'        <- "Penman Monteith"
- xpi.list$water$'actual evaporation'           <- "Penman Monteith"
- xpi.list$water$'kc factor'                    <- "dev stage"
- xpi.list$water$'hydraulic functions'          <- "van Genuchten and Mualem"
- xpi.list$water$'flow module'                  <- "HYDRUS Flow"
+    # [const] ----------------------
+    xpi.list$const$'kc factor'                    <- 0
 
- # [const] ----------------------
- xpi.list$const$'kc factor'                    <- 0
+    # [HYDRUS Flow] ----------------------
+    # [hydrus] ----------------------
+    xpi.list$hydrus$'bottombc'                 <- 1
+    xpi.list$hydrus$'mobil'                    <- 0
+    xpi.list$hydrus$'infiltration_limit'       <- 0
+    xpi.list$hydrus$'infiltration_layer_limit' <- 0
 
- # [HYDRUS Flow] ----------------------
- # [hydrus] ----------------------
- xpi.list$hydrus$'bottombc'                 <- 1
- xpi.list$hydrus$'mobil'                    <- 0
- xpi.list$hydrus$'infiltration_limit'       <- 0
- xpi.list$hydrus$'infiltration_layer_limit' <- 0
+    # [Penman Monteith] ----------------------
+    xpi.list$'Penman Monteith'$'soil cover'      <- 0.0
 
- # [Penman Monteith] ----------------------
- xpi.list$'Penman Monteith'$'soil cover'      <- 0.0
+    # [evapotranspiration_pm] ----------------------
 
- # [evapotranspiration_pm] ----------------------
+    # [LEACHN] ----------------------
 
- # [LEACHN] ----------------------
+    # [leachn] ----------------------
+    xpi.list$leachn$'ini_filename'        <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_leachn.ini$>"
 
- # [leachn] ----------------------
- xpi.list$leachn$'ini_filename'        <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_leachn.ini$>"
+    # [heat] ----------------------
+    xpi.list$heat$'heat transfer'       <- "DAISY Modul Heat Transfer"
+    xpi.list$heat$'albedo'              <- "Vegetation const (0.25)"
+    xpi.list$heat$'surface temperature' <- "First Soil Layer"
+    xpi.list$heat$'ground heat'         <- "Penman Monteith"
+    xpi.list$heat$'net radiation'       <- "Penman Monteith"
+    xpi.list$heat$'emissivity'          <- "Penman Monteith"
 
- # [heat] ----------------------
- xpi.list$heat$'heat transfer'       <- "DAISY Modul Heat Transfer"
- xpi.list$heat$'albedo'              <- "Vegetation const (0.25)"
- xpi.list$heat$'surface temperature' <- "First Soil Layer"
- xpi.list$heat$'ground heat'         <- "Penman Monteith"
- xpi.list$heat$'net radiation'       <- "Penman Monteith"
- xpi.list$heat$'emissivity'          <- "Penman Monteith"
+    # [nitrogen] ----------------------
+    xpi.list$nitrogen$'nitrogen transport'  <- "LEACHN"
+    xpi.list$nitrogen$'nitrification'       <- "LEACHN"
+    xpi.list$nitrogen$'denitrification'     <- "LEACHN"
+    xpi.list$nitrogen$'urea hydrolysis'     <- "LEACHN"
+    xpi.list$nitrogen$'mineralisation'      <- "Hansen et al. (DAISY_Miner)"
+    xpi.list$nitrogen$'deposition'          <- "Constant Deposition"
+    # [management] ----------------------
+    xpi.list$management$'application fertilizers' <- "Schaaf"
+    xpi.list$management$'mixing incorporation'    <- "Williams et al. (EPIC)"
 
- # [nitrogen] ----------------------
- xpi.list$nitrogen$'nitrogen transport'  <- "LEACHN"
- xpi.list$nitrogen$'nitrification'       <- "LEACHN"
- xpi.list$nitrogen$'denitrification'     <- "LEACHN"
- xpi.list$nitrogen$'urea hydrolysis'     <- "LEACHN"
- xpi.list$nitrogen$'mineralisation'      <- "Hansen et al. (DAISY_Miner)"
- xpi.list$nitrogen$'deposition'          <- "Constant Deposition"
- # [management] ----------------------
- xpi.list$management$'application fertilizers' <- "Schaaf"
- xpi.list$management$'mixing incorporation'    <- "Williams et al. (EPIC)"
+    # [Schaaf] ----------------------
+    # [schaaf] ----------------------
+    xpi.list$schaaf$'filename'                 <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_fertilization.ini$>"
 
- # [Schaaf] ----------------------
- # [schaaf] ----------------------
- xpi.list$schaaf$'filename'                 <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_fertilization.ini$>"
+    # [schaaf_manag] ----------------------
+    xpi.list$schaaf_manag$'ini_filename'       <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_schaaf_manag.ini$>"
 
- # [schaaf_manag] ----------------------
- xpi.list$schaaf_manag$'ini_filename'       <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_schaaf_manag.ini$>"
+    # [DAISY Modul Heat Transfer] ----------------------
+    xpi.list$'DAISY Modul Heat Transfer'$'frost_rad_flag'           <- 1
+    xpi.list$'DAISY Modul Heat Transfer'$'lower_boundary_condition' <- 2
 
- # [DAISY Modul Heat Transfer] ----------------------
- xpi.list$'DAISY Modul Heat Transfer'$'frost_rad_flag'           <- 1
- xpi.list$'DAISY Modul Heat Transfer'$'lower_boundary_condition' <- 2
+    # [daisy] ----------------------
 
- # [daisy] ----------------------
+    # [plant] ----------------------
+    # GECROS
+    if(query.plant.model %in% c("GECROS", "GECROS_H")){
+      xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
+      xpi.list$plant$'phenological development'    <- "GECROS Development"
+      xpi.list$plant$'biomass growth'              <- "GECROS BiomassGrowth"
+      xpi.list$plant$'canopy gross photosynthesis' <- "GECROS Gross Photosynthesis"
+      xpi.list$plant$'canopy formation'            <- "GECROS Canopy Formation"
+      xpi.list$plant$'root length growth'          <- "GECROS Root System Formation"
+      xpi.list$plant$'crop senescence'             <- "GECROS Crop Senescence"
+      xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
+      xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
+      xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
+    }
+    # GECROS_h: lazy short coding.
+    if(query.plant.model == "GECROS_H"){
+      xpi.list$plant %<>% lapply(., stringr::str_replace, "GECROS", "GECROS_h")
+    }
 
- # [plant] ----------------------
- xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
- xpi.list$plant$'phenological development'    <- "GECROS Development"
- xpi.list$plant$'biomass growth'              <- "GECROS BiomassGrowth"
- xpi.list$plant$'canopy gross photosynthesis' <- "GECROS Gross Photosynthesis"
- xpi.list$plant$'canopy formation'            <- "GECROS Canopy Formation"
- xpi.list$plant$'root length growth'         <- "GECROS Root System Formation"
- xpi.list$plant$'crop senescence'             <- "GECROS Crop Senescence"
- xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
- xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
- xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
+    # [gecros] ----------------------
+    xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
 
- # [GECROS Development] ----------------------
+    # [daisy_miner] ----------------------
+    xpi.list$'daisy_miner'$'ini_filename'<- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_daisy_miner_nitrogen.ini$>"
 
- # [gecros] ----------------------
- xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+    # [dev stage] ----------------------
+    # xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
+    xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
 
- # [GECROS BiomassGrowth] ----------------------
+    # [Wang (SPASS)] ----------------------
+    xpi.list$'Wang (SPASS)'$'harvest_at_maturity'         <- 0
+    xpi.list$'Wang (SPASS)'$'set_LAI_to_0_after_maturity' <- 0
 
- # [GECROS Nitrogen Demand] ----------------------
+    # [spass] ----------------------
+    xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_maize.ini$>"
+    xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_wheat.ini$>"
+    xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_winterrape.ini$>"
+    xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_zwifru.ini$>"
+    xpi.list$'spass'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
 
- # [GECROS Nitrogen Uptake] ----------------------
+    # [Penman Monteith ASCE 81 crop] ----------------------
 
- # [GECROS Root System Formation] ----------------------
+    #  [Constant Deposition] ------------------------------
+    xpi.list$'Constant Deposition'$'no3'   <- 6.0
+    xpi.list$'Constant Deposition'$'nh4'   <- 12.0
 
- # [Hansen et al. (DAISY_Miner)] ----------------------
+  }
 
- # [daisy_miner] ----------------------
- xpi.list$'daisy_miner'$'ini_filename'  <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_daisy_miner_nitrogen.ini$>"
+  # _____ UPDATE ----------------
+  if(all(!is.na(x)) & length(x) != 1){
+    switch_names <- names(x)
+    for(i in 1:length(switch_names)){
 
- # [dev stage] ----------------------
- # xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
- xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
+      names_it <- switch_names[i]
 
- # [Wang (SPASS)] ----------------------
- xpi.list$'Wang (SPASS)'$'harvest_at_maturity'         <- 0
- xpi.list$'Wang (SPASS)'$'set_LAI_to_0_after_maturity' <- 0
+      # removes empty named elements
+      system <- rlist::list.remove(system ,  which(names(system) == ""))
+      xpi.list[[names_it]] <- update_list(x[[names_it]], xpi.list[[names_it]])
 
- # [spass] ----------------------
- xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_maize.ini$>"
- xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_wheat.ini$>"
- xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_winterrape.ini$>"
- xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_zwifru.ini$>"
- xpi.list$'spass'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+    }; rm(switch_names, names_it)
+  }
+  # _____ Prepare print out ----------------
+  # _____ UPDATE ----------------
 
- # [Penman Monteith ASCE 81 crop] ----------------------
+  switch_names_xpi <- names(xpi.list)
+  res <- ""
+  for(i in 1:length(switch_names_xpi)){
 
+    names_it <- switch_names_xpi[i]
 
-}
+    res <- c(res,
+             c(paste0("[", names_it, "]")
+               , paste(names(xpi.list[[names_it]]), do.call("rbind", xpi.list[[names_it]]), sep = " = ")
+               , ""
+             ))
 
- # _____ UPDATE ----------------
- if(all(!is.na(x)) & length(x) != 1){
-  switch_names <- names(x)
-  for(i in 1:length(switch_names)){
+  }
 
-  names_it <- switch_names[i]
-
-  # removes empty named elements
-  system <- rlist::list.remove(system ,  which(names(system) == ""))
-  xpi.list[[names_it]] <- update_list(x[[names_it]], xpi.list[[names_it]])
-
- }; rm(switch_names, names_it)
- }
- # _____ Prepare print out ----------------
- # _____ UPDATE ----------------
-
- switch_names_xpi <- names(xpi.list)
- res <- ""
- for(i in 1:length(switch_names_xpi)){
-
-  names_it <- switch_names_xpi[i]
-
-  res <- c(res,
-           c(paste0("[", names_it, "]")
-             , paste(names(xpi.list[[names_it]]), do.call("rbind", xpi.list[[names_it]]), sep = " = ")
-             , ""
-           ))
-
- }
-
- return(res)
+  return(res)
 
 }
