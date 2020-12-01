@@ -7,7 +7,8 @@
 #' @param x NA - Default values are used i) a list with named elements. The names of the elements will be used as the LHS and
 #' the vector element will be the RHS of the equal sign in extending [system].
 #' ii) The default system can be updated by named x elements equalling the [system] LHS
-#' @param query.plant.model character which can be used to update the plant model. Supported: GECROS, GECROS_h, SPASS, CERES
+#' @param query.plant.model character to specify the plant model. Supported: GECROS, GECROS_h, SPASS, CERES
+#' @param query.miner.model character to specify the mineralisation model. Supported: DAISY and LEACHN.
 #' @return The system specification for the .xnp file
 #'
 #' @author Tobias KD Weber , \email{tobias.weber@uni-hohenheim.de}
@@ -24,7 +25,10 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
   #  x <- lapply(x, as.character)
   # }
   query.plant.model %<>% toupper
+  query.miner.model %<>% toupper
+
   if(query.plant.model %in% c("GECROS", "GECROS_H", "SPASS", "CERES")){stop("plant model not supported")}
+  if(query.miner.model %in% c("DAISY", "HANSEN ET AL. (DAISY_MINER)", "LEACHN")){stop("mineralisation model not supported")}
   # _____ DEFAULT settings ----------------
   {
     xpi.list    <- list()
