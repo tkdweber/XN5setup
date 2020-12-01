@@ -7,7 +7,7 @@
 #' @param x NA - Default values are used i) a list with named elements. The names of the elements will be used as the LHS and
 #' the vector element will be the RHS of the equal sign in extending [system].
 #' ii) The default system can be updated by named x elements equalling the [system] LHS
-#' @param query.plant.model character which can be used to update the plant model. only gecros and gecros_h supported.
+#' @param query.plant.model character which can be used to update the plant model. Supported: GECROS, GECROS_h, SPASS, CERES
 #' @return The system specification for the .xnp file
 #'
 #' @author Tobias KD Weber , \email{tobias.weber@uni-hohenheim.de}
@@ -24,7 +24,7 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros"){
   #  x <- lapply(x, as.character)
   # }
   query.plant.model %<>% toupper
-  if(query.plant.model %in% toupper(c("gecros", "gecros_h"))){stop("plant model not supported")}
+  if(query.plant.model %in% c("GECROS", "GECROS_H", "SPASS", "CERES")){stop("plant model not supported")}
   # _____ DEFAULT settings ----------------
   {
     xpi.list    <- list()
@@ -107,7 +107,6 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros"){
 
     # [plant] ----------------------
     # GECROS
-    if(query.plant.model %in% c("GECROS", "GECROS_H")){
       xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
       xpi.list$plant$'phenological development'    <- "GECROS Development"
       xpi.list$plant$'biomass growth'              <- "GECROS BiomassGrowth"
@@ -118,12 +117,17 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros"){
       xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
       xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
       xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
-    }
+
     # GECROS_h: lazy short coding.
     if(query.plant.model == "GECROS_H"){
       xpi.list$plant %<>% lapply(., stringr::str_replace, "GECROS", "GECROS_h")
     }
-
+      if(query.plant.model == "CERES"){
+      xpi.list$plant %<>% lapply(., function(x) "CERES")
+      }
+      if(query.plant.model == "SPASS"){
+        xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
+      }
     # [gecros] ----------------------
     xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
 
