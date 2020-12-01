@@ -7,7 +7,7 @@
 #' @param x i) a list with named elements. The names of the elements will be used as the LHS and
 #' the vector element will be the RHS of the equal sign in extending [options].
 #' ii) The default options can be updated by named x elements equalling the [options] LHS
-#'
+#' @param query.plant.model character to specify the plant model. Supported: GECROS, GECROS_h
 #' @return The options specification for the .xnp file
 #'
 #' @author Tobias KD Weber , \email{tobias.weber@uni-hohenheim.de}
@@ -18,7 +18,7 @@
 #'
 #' @export
 
-xpn_optionsDef <- function(x = NA){
+xpn_optionsDef <- function(x = NA, query.plant.model = "gecros"){
 
  if(all(!is.na(x))){
   x <- lapply(x, as.character)
@@ -28,7 +28,7 @@ xpn_optionsDef <- function(x = NA){
 
  # code to replace the project name
  # gsub("$PROJECT_NAME", "", "$<$PROJECT_PATH/$PROJECT_NAME__barley_sommergerste_gecros.ini$>", fixed = TRUE)
-
+ query.plant.model %<>% tolower
  # [options]
  options$'Barley_Sommergerste_gecros'   = "$<$PROJECT_PATH/$PROJECT_NAME__barley_sommergerste_gecros.ini$>"
  options$'Barley_Wintergerste_gecros'   = "$<$PROJECT_PATH/$PROJECT_NAME__barley_wintergerste_gecros.ini$>"
@@ -59,8 +59,15 @@ xpn_optionsDef <- function(x = NA){
  options$'create xno files'             = 0
  options$'special_output_def'           = "$<$PROJECT_PATH/$PROJECT_NAME_special_output_def.ini$>"
  options$'measure time'                 = 0
-
  options$'output time span'             = "2000-08-01:2020-11-10"
+
+ if(query.plant.model == "gecros_h"){
+   options %<>% lapply(., stringr::str_replace, "gecros", "gecros_h")
+   names(options) %<>% stringr::str_replace(., "gecros", "gecros_h")
+ }
+
+
+
 
  if(all(!is.na(x))){
   # add to default list
