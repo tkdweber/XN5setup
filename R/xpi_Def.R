@@ -18,7 +18,7 @@
 #'
 #' @export
 
-xpi_Def <- function(x = NA, query.plant.model = "gecros"){
+xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "DAISY"){
 
   # if(all(!is.na(x))){
   #  x <- lapply(x, as.character)
@@ -86,8 +86,13 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros"){
     xpi.list$nitrogen$'nitrification'       <- "LEACHN"
     xpi.list$nitrogen$'denitrification'     <- "LEACHN"
     xpi.list$nitrogen$'urea hydrolysis'     <- "LEACHN"
-    xpi.list$nitrogen$'mineralisation'      <- "Hansen et al. (DAISY_Miner)"
     xpi.list$nitrogen$'deposition'          <- "Constant Deposition"
+
+    xpi.list$nitrogen$'mineralisation' <- switch(query.miner.model,
+           "DAISY"                       = "Hansen et al. (DAISY_Miner)",
+           "HANSEN ET AL. (DAISY_MINER)" = "Hansen et al. (DAISY_Miner)",
+           "LEACHN"                      = "LEACHN"
+    )
     # [management] ----------------------
     xpi.list$management$'application fertilizers' <- "Schaaf"
     xpi.list$management$'mixing incorporation'    <- "Williams et al. (EPIC)"
