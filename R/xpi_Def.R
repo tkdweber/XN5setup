@@ -100,7 +100,7 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros"){
     xpi.list$schaaf_manag$'ini_filename'       <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_schaaf_manag.ini$>"
 
     # [DAISY Modul Heat Transfer] ----------------------
-    xpi.list$'DAISY Modul Heat Transfer'$'frost_rad_flag'           <- 1
+    xpi.list$'DAISY Modul Heat Transfer'$'frost_rad_flag'           <- 2
     xpi.list$'DAISY Modul Heat Transfer'$'lower_boundary_condition' <- 2
 
     # [daisy] ----------------------
