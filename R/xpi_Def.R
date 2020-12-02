@@ -64,11 +64,11 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
     # [hydrus] ----------------------
     xpi.list$hydrus$'bottombc'                 <- 1
     xpi.list$hydrus$'mobil'                    <- 0
-    xpi.list$hydrus$'infiltration_limit'       <- 0
-    xpi.list$hydrus$'infiltration_layer_limit' <- 0
+    xpi.list$hydrus$'infiltration_limit'       <- 1
+    xpi.list$hydrus$'infiltration_layer_limit' <- 1
 
     # [Penman Monteith] ----------------------
-    xpi.list$'Penman Monteith'$'soil cover'      <- 0.0
+    xpi.list$'Penman Monteith'$'soil cover'     <- 0.0
 
     # [evapotranspiration_pm] ----------------------
 
