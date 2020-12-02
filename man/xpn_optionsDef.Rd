@@ -4,12 +4,14 @@
 \alias{xpn_optionsDef}
 \title{setup XPN options line}
 \usage{
-xpn_optionsDef(x = NA)
+xpn_optionsDef(x = NA, query.plant.model = "gecros")
 }
 \arguments{
 \item{x}{i) a list with named elements. The names of the elements will be used as the LHS and
 the vector element will be the RHS of the equal sign in extending [options].
 ii) The default options can be updated by named x elements equalling the [options] LHS}
+
+\item{query.plant.model}{character to specify the plant model. Supported: GECROS, GECROS_h}
 }
 \value{
 The options specification for the .xnp file

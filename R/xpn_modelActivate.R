@@ -12,7 +12,7 @@
 #'
 #' @examples
 #'
-#' #' # xpn_modelActivate(xpn_file_path, xpi_activate = c("0_0_0_0.xpi", "0_1_0_0.xpi"), flip = TRUE)
+#' # xpn_modelActivate(xpn_file_path, xpi_activate = c("0_0_0_0.xpi", "0_1_0_0.xpi"), flip = TRUE)
 #'
 #' @export
 

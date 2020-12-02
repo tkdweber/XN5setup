@@ -4,12 +4,16 @@
 \alias{xpi_Def}
 \title{setup XPN system line}
 \usage{
-xpi_Def(x = NA)
+xpi_Def(x = NA, query.plant.model = "gecros", query.miner.model = "DAISY")
 }
 \arguments{
 \item{x}{NA - Default values are used i) a list with named elements. The names of the elements will be used as the LHS and
 the vector element will be the RHS of the equal sign in extending [system].
 ii) The default system can be updated by named x elements equalling the [system] LHS}
+
+\item{query.plant.model}{character to specify the plant model. Supported: GECROS, GECROS_h, SPASS, CERES}
+
+\item{query.miner.model}{character to specify the mineralisation model. Supported: DAISY and LEACHN.}
 }
 \value{
 The system specification for the .xnp file
