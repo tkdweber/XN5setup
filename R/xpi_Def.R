@@ -27,8 +27,8 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
   query.plant.model %<>% toupper
   query.miner.model %<>% toupper
 
-  if(query.plant.model %in% c("GECROS", "GECROS_H", "SPASS", "CERES")){stop("plant model not supported")}
-  if(query.miner.model %in% c("DAISY", "HANSEN ET AL. (DAISY_MINER)", "LEACHN")){stop("mineralisation model not supported")}
+  if(!(query.plant.model %in% c("GECROS", "GECROS_H", "SPASS", "CERES"))){stop("plant model not supported")}
+  if(!(query.miner.model %in% c("DAISY", "HANSEN ET AL. (DAISY_MINER)", "LEACHN"))){stop("mineralisation model not supported")}
   # _____ DEFAULT settings ----------------
   {
     xpi.list    <- list()
