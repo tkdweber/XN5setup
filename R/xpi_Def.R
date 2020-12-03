@@ -126,15 +126,23 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
     xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
     xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
     xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
+    xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
 
     # GECROS_h: lazy short coding.
     switch(query.plant.model,
            "GECROS_H" = xpi.list$plant %<>% lapply(., stringr::str_replace, "GECROS", "GECROS_h"),
-           "CERES"    = xpi.list$plant %<>% lapply(., function(x) "CERES"),
-           "SPASS"    = xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
+           "CERES"    = {
+
+                          xpi.list$plant %<>% lapply(., function(x) "CERES")
+                          xpi.list$plant$'potential transpiration'     <- "CERES"
+           },
+           "SPASS"    = {
+                          xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
+                          xpi.list$plant$'potential transpiration'     <- "WANG (SPASS)"
+                          }
 
     )
-    xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
+
 
     switch(query.plant.model,
            "GECROS"   =  xpi.list$'gecros'$'filename'   <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
