@@ -134,11 +134,9 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
            "CERES"    = {
 
                           xpi.list$plant %<>% lapply(., function(x) "CERES")
-                          xpi.list$plant$'potential transpiration'     <- "CERES"
            },
            "SPASS"    = {
                           xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
-                          xpi.list$plant$'potential transpiration'     <- "WANG (SPASS)"
                           }
 
     )
