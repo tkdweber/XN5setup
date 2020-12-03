@@ -141,17 +141,16 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
 
     )
 
-
     switch(query.plant.model,
            "GECROS"   =  xpi.list$'gecros'$'filename'   <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
            "GECROS_H" =  xpi.list$'gecros_h'$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
            "CERES"    =  {
                          xpi.list$'ceres'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
-                         xpi.list$'ceres'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__maize.ini$>"
-                         xpi.list$'ceres'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__wheat.ini$>"
-                         xpi.list$'ceres'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__winterrape.ini$>"
-                         xpi.list$'ceres'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__zwifru.ini$>"
-                         xpi.list$'ceres'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__crop_rotation.ini$>"
+                         xpi.list$'ceres'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME__maize.ini$>"
+                         xpi.list$'ceres'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME__wheat.ini$>"
+                         xpi.list$'ceres'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME__winterrape.ini$>"
+                         xpi.list$'ceres'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME__zwifru.ini$>"
+                         xpi.list$'ceres'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME__crop_rotation.ini$>"
              },
            "SPASS"    =  {
                         # [Wang (SPASS)] ----------------------
@@ -159,10 +158,10 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
                         xpi.list$'Wang (SPASS)'$'set_LAI_to_0_after_maturity' <- 0
                         # [spass] ----------------------
                         xpi.list$'spass'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
-                        xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__maize.ini$>"
-                        xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__wheat.ini$>"
-                        xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__winterrape.ini$>"
-                        xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__zwifru.ini$>"
+                        xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME__maize.ini$>"
+                        xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME__wheat.ini$>"
+                        xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME__winterrape.ini$>"
+                        xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME__zwifru.ini$>"
                         }
     )
 
