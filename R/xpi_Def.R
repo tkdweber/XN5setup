@@ -93,9 +93,9 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
     xpi.list$nitrogen$'deposition'          <- "Constant Deposition"
 
     xpi.list$nitrogen$'mineralisation' <- switch(query.miner.model,
-           "DAISY"                       = "Hansen et al. (DAISY_Miner)",
-           "HANSEN ET AL. (DAISY_MINER)" = "Hansen et al. (DAISY_Miner)",
-           "LEACHN"                      = "LEACHN"
+                                                 "DAISY"                       = "Hansen et al. (DAISY_Miner)",
+                                                 "HANSEN ET AL. (DAISY_MINER)" = "Hansen et al. (DAISY_Miner)",
+                                                 "LEACHN"                      = "LEACHN"
     )
     # [management] ----------------------
     xpi.list$management$'application fertilizers' <- "Schaaf"
@@ -116,50 +116,55 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
 
     # [plant] ----------------------
     # GECROS
-      xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
-      xpi.list$plant$'phenological development'    <- "GECROS Development"
-      xpi.list$plant$'biomass growth'              <- "GECROS BiomassGrowth"
-      xpi.list$plant$'canopy gross photosynthesis' <- "GECROS Gross Photosynthesis"
-      xpi.list$plant$'canopy formation'            <- "GECROS Canopy Formation"
-      xpi.list$plant$'root length growth'          <- "GECROS Root System Formation"
-      xpi.list$plant$'crop senescence'             <- "GECROS Crop Senescence"
-      xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
-      xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
-      xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
+
+    xpi.list$plant$'phenological development'    <- "GECROS Development"
+    xpi.list$plant$'biomass growth'              <- "GECROS BiomassGrowth"
+    xpi.list$plant$'canopy gross photosynthesis' <- "GECROS Gross Photosynthesis"
+    xpi.list$plant$'canopy formation'            <- "GECROS Canopy Formation"
+    xpi.list$plant$'root length growth'          <- "GECROS Root System Formation"
+    xpi.list$plant$'crop senescence'             <- "GECROS Crop Senescence"
+    xpi.list$plant$'nitrogen demand'             <- "GECROS Nitrogen Demand"
+    xpi.list$plant$'nitrogen uptake'             <- "GECROS Nitrogen Uptake"
+    xpi.list$plant$'actual transpiration'        <- "GECROS Actual Transpiration"
 
     # GECROS_h: lazy short coding.
-    if(query.plant.model == "GECROS_H"){
-      xpi.list$plant %<>% lapply(., stringr::str_replace, "GECROS", "GECROS_h")
-    }
-      if(query.plant.model == "CERES"){
-      xpi.list$plant %<>% lapply(., function(x) "CERES")
-      }
-      if(query.plant.model == "SPASS"){
-        xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
-      }
-    # [gecros] ----------------------
-      switch(query.plant.model,
-             "GECROS"   =  xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
-             "GECROS_H" =  xpi.list$gecros_h$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
-               )
+    switch(query.plant.model,
+           "GECROS_H" = xpi.list$plant %<>% lapply(., stringr::str_replace, "GECROS", "GECROS_h"),
+           "CERES"    = xpi.list$plant %<>% lapply(., function(x) "CERES"),
+           "SPASS"    = xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
+
+    )
+    xpi.list$plant$'potential transpiration'     <- "Penman Monteith"
+
+    switch(query.plant.model,
+           "GECROS"   =  xpi.list$'gecros'$'filename'   <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
+           "GECROS_H" =  xpi.list$'gecros_h'$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
+           "CERES"    =  {
+                         xpi.list$'ceres'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+                         xpi.list$'ceres'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__maize.ini$>"
+                         xpi.list$'ceres'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__wheat.ini$>"
+                         xpi.list$'ceres'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__winterrape.ini$>"
+                         xpi.list$'ceres'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__zwifru.ini$>"
+                         xpi.list$'ceres'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__crop_rotation.ini$>"
+             },
+           "SPASS"    =  {
+                        # [Wang (SPASS)] ----------------------
+                        xpi.list$'Wang (SPASS)'$'harvest_at_maturity'         <- 0
+                        xpi.list$'Wang (SPASS)'$'set_LAI_to_0_after_maturity' <- 0
+                        # [spass] ----------------------
+                        xpi.list$'spass'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+                        xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__maize.ini$>"
+                        xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__wheat.ini$>"
+                        xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__winterrape.ini$>"
+                        xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR__zwifru.ini$>"
+                        }
+    )
 
     # [daisy_miner] ----------------------
     xpi.list$'daisy_miner'$'ini_filename'<- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_daisy_miner_nitrogen.ini$>"
 
     # [dev stage] ----------------------
-    # xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
     xpi.list$'dev stage'$'kc_param_file' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_kc_dev_stage.ini$>"
-
-    # [Wang (SPASS)] ----------------------
-    xpi.list$'Wang (SPASS)'$'harvest_at_maturity'         <- 0
-    xpi.list$'Wang (SPASS)'$'set_LAI_to_0_after_maturity' <- 0
-
-    # [spass] ----------------------
-    xpi.list$'spass'$'Maize'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_maize.ini$>"
-    xpi.list$'spass'$'Wheat'               <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_wheat.ini$>"
-    xpi.list$'spass'$'Rapeseed_Winterrape' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_winterrape.ini$>"
-    xpi.list$'spass'$'CoverCrop'           <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_zwifru.ini$>"
-    xpi.list$'spass'$'filename'            <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
 
     # [Penman Monteith ASCE 81 crop] ----------------------
 
