@@ -138,7 +138,10 @@ xpi_Def <- function(x = NA, query.plant.model = "gecros", query.miner.model = "D
         xpi.list$plant %<>% lapply(., function(x) "WANG (SPASS)")
       }
     # [gecros] ----------------------
-    xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+      switch(query.plant.model,
+             "GECROS"   =  xpi.list$gecros$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>",
+             "GECROS_H" =  xpi.list$gecros_h$'filename' <- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_crop_rotation.ini$>"
+               )
 
     # [daisy_miner] ----------------------
     xpi.list$'daisy_miner'$'ini_filename'<- "$<$PROJECT_PATH/$PROJECT_NAME_$REG_STR_daisy_miner_nitrogen.ini$>"
