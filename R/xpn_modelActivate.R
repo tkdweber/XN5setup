@@ -49,7 +49,7 @@ xpn_modelActivate <- function(xpn_file_path, xpi_activate = "all", flip = FALSE,
   xpn[xpn_detect] <- paste0("grid = ", paste(xpn_split, collapse = ";"),";")
 
 
-  if(!is.null(xpn_file_path)){
+  if(!is.null(xpn_file_path_out)){
     xpn_file_path <- xpn_file_path_out
   }
   write(x = xpn, file = xpn_file_path)
