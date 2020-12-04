@@ -27,13 +27,13 @@ copy_climDat <- function(x, query.overwrite = TRUE){
  # introduce checks
  if(!exists("PROJECT_PATH"      , where = x)){stop("PROJECT_PATH not an element of x")}
  if(!exists("weather"           , where = x)){stop("weather not an element of x")}
- if(!exists("file_name_short"   , where = x$weather)){stop("file_name not an element of x$weather" )}
+ if(!exists("file_name"   , where = x$weather)){stop("file_name not an element of x$weather" )}
  if(!exists("paths_full"        , where = x$weather)){stop("paths_full not an element of x$weather")}
 
  paths_full_new <- file.path(x$PROJECT_PATH, x$weather$file_name_short)
 
  file.copy(from        = x$weather$paths_full
-           , to        = paths_full_new
+           , to        = paths_full
            , overwrite = query.overwrite)
 
  return(list("paths_full_new" = paths_full_new))
