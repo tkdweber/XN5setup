@@ -33,7 +33,6 @@ create_cfgClimateFile <- function(path, query.write = FALSE, path_file_out = "cf
     out_path    <- file.path(path, path_file_out)
   }else{
     input_files <- path
-print("here")
     # out_path    <- file.path(path, path_file_out)
    out_stub <- stringr::str_split(path, "/") %>% do.call(., what = "rbind")
 
