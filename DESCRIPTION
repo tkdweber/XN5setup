@@ -14,7 +14,7 @@ Description: R package to set up gridded XN5 simulations. The core idea is to se
     \emph{x} is the spatial grid abscissa, e.g. spatial explicit properties,
     \emph{y} is the spatial grid ordinate, e.g. for stochastic soil properties, and
     \emph{tile} are the grid cell's sub-columns, e.g. crop rotations.
-Depends: R (>= 3.6.0)
+Depends: R (>= 3.4.4)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
