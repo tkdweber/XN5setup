@@ -3,7 +3,7 @@
 #'@description The function enable to sperate the xpn grid into sub-elements, so that
 #'
 #'
-#' @param xpn_file_path  a list with at least the following 4 element
+#' @param xpn_file_path  .xpn path in question, full path names ahas to be given.
 #' @param splits.no number of splits along the xpn.
 #' @param chunks.len number of simulation units per xpn chunk
 #'

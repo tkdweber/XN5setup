@@ -2,10 +2,10 @@
 #'
 #' A simple function that enables to rapiud selection/deselection of simulated cells in the xpn.
 #'
-#' @param xpn_file_path .xpn file in question, full path names ahas to be given.
-#' @param xpi_activate character to specify the plant model. Supported: GECROS, GECROS_h, SPASS, CERES
-#' @param flip character to specify the mineralisation model. Supported: DAISY and LEACHN.
-#' @param xpn_file_path_out optional chaarcter to write a new xpn, default \code{NULL}, means overwriting of .xpn specified in \code{xpn_file_path}. Make sure to provide a full path, otherwise the new xpn will be written into the current working directory.
+#' @param xpn_file_path .xpn path in question, full path names ahas to be given.
+#' @param xpi_activate character vector with XN5 column names to activate/deactivate, as named in .xpi .
+#' @param flip default \code{FALSE}. \code{TRUE} inverts the selection specified in \code{xpi_activate}.
+#' @param xpn_file_path_out optional character to write a new xpn, default \code{NULL}, means overwriting of .xpn specified in \code{xpn_file_path}. Make sure to provide a full path, otherwise the new xpn will be written into the current working directory.
 #' @return nothing. The function overwrites the xpn if \code{xpn_file_path_out} is not specified-.
 #'
 #' @author Tobias KD Weber , \email{tobias.weber@uni-hohenheim.de}
@@ -22,7 +22,7 @@ xpn_modelActivate <- function(xpn_file_path, xpi_activate = "all", flip = FALSE,
 
   # xpn_file_path     chr     the name and path of the xpn file in question
   # xpi_activate      num     the names of the xpi to activate:
-  # flip              chr     flip the selection of xpi_activate, i.e. enable deselction. Not possible to deselect all, as it is no use.
+  # flip              chr     flip the selection of xpi_activate, i.e. enable deselection. Not possible to deselect all, as it is no use.
 
   xpn        <- readLines(xpn_file_path)
   xpn_detect <- stringi::stri_detect(str = xpn, regex = "grid")
