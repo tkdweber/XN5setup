@@ -26,10 +26,6 @@
 
 xpn_modelDuplicate <- function(xpn_file_path, Npop = 10, dim_extend, crop_ini_file_name = "wheat_winterweizen_gecros"){
 
-  # xpn_file_path <- "C:/Projects/ExpertN/expertn514e/built/cfg/replicateECv11_flat/replicateECv11.xpn"
-  # dim_extend    <- 2
-  # Npar          <- 3
-  # crop_ini_file_name = "wheat_winterweizen_gecros"
   Npar <- Npop
   # CHECKS
   xpi_path      <- strsplit(xpn_file_path, "/") %>% unlist %>%  .[-length(.)] %>% paste(., collapse = "/")
